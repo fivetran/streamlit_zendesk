@@ -179,8 +179,5 @@ else:
             # Ensure page stays within range
             st.session_state.page = max(0, min(st.session_state.page, n_pages - 1))
 
-            # Display the table in Streamlit
-            # st.table(grouped)
-
     else:
         st.warning('Please ensure both start date and end date are selected.')
