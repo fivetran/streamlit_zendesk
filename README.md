@@ -1,10 +1,3 @@
-import streamlit as st
-from functions.variables import database_schema_variables, destination_selection
-
-st.sidebar.header('Data Connection Variables')
-destination = destination_selection()
-database, schema = database_schema_variables()
-'''
 # Fivetran Zendesk Streamlit App
 
 This app is intended to leverage data from the Fivetran Zendesk connector and Fivetran Zendesk data model to produce analytics ready reports which may be effortlessly leveraged to understand your Zendesk ticket and assignee activity data. You may find the analytics ready reports within the pages of this Streamlit app (these may be found on the left pane). These dashboards have been constructed using the end models from the Fivetran [Zendesk dbt package](https://github.com/fivetran/dbt_zendesk). In particular, all tiles within the respective pages have been constructed from a simple `select * from zendesk__ticket_metrics` query. For an understanding of the ticket_metrics model, you may inspect the specifics within the hosted [dbt docs](https://fivetran.github.io/dbt_zendesk/#!/model/model.zendesk.zendesk__ticket_metrics).
@@ -49,4 +42,3 @@ pip3 install -r requirements.txt
 - Run `streamlit run zendesk.py` in your terminal to deploy the app on your local host.
 - Change the Destination variable in the app to be either BigQuery or Snowflake
 - Modify the Database and Schema variables in the app to be your designated database.schema where the zendesk__ticket_metrics table resides.
-'''
