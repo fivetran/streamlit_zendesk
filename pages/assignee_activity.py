@@ -12,7 +12,7 @@ database, schema = database_schema_variables()
 
 st.title('Zendesk Assignee Activity')
 
-if database == "Database" or schema == "Schema":
+if destination in ("BigQuery","Snowflake") and (database in ("Database", "None") or schema in ("Schema", "None")):
     st.warning('To leverage your own internal data, you will need to fork this repo and deploy as your own Streamlit app. Please see the README for additional details.')
 else:
     ## Define the top level date filter

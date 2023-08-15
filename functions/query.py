@@ -8,16 +8,15 @@ destination = st.session_state.destination
 database = st.session_state.database 
 schema = st.session_state.schema
 
-# Create API client.
-credentials = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"]
-)
-client = bigquery.Client(credentials=credentials)
-
 # Perform query.
 # Uses st.cache_data to only rerun when the query changes or after 10 min.
 @st.cache_data(ttl=600)
 def run_query(query):
+    # Create API client.
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    client = bigquery.Client(credentials=credentials)
     query_job = client.query(query)
     rows_raw = query_job.result()
     # Convert to list of dicts. Required for st.cache_data to hash the return value.
@@ -55,7 +54,7 @@ def query_results(destination, database, schema):
         )
     elif destination == "Snowflake":
         conn = st.experimental_connection('snowpark')
-        query = conn.query(
+        query_job = conn.query(
             "select "\
                 "ticket_id,"\
                 "created_at,"\
@@ -82,6 +81,9 @@ def query_results(destination, database, schema):
                 "assignee_name "\
             "from " + database + "." + schema + ".zendesk__ticket_metrics"
         )
+        raw_results = query_job.result()
+        # Convert to list of dicts. Required for st.cache_data to hash the return value.
+        query = [dict(row) for row in raw_results]
 
     else:
         query = pd.read_csv('data/dunder_mifflin_tickets.csv')

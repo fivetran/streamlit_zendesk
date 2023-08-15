@@ -29,6 +29,8 @@ def database_schema_variables():
         st.session_state.schema = schema
     else:
         database = None
+        st.session_state.database = database
         schema = None
+        st.session_state.schema = schema
 
     return database, schema
