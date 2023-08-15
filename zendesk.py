@@ -6,13 +6,13 @@ destination = destination_selection()
 database, schema = database_schema_variables()
 '''
 # Fivetran Zendesk Streamlit App
-## Overview
+## 📣 Overview
 
-The [Fivetran Zendesk Streamlit app](https://fivetran-zendesk.streamlit.app/) leverages data from the Fivetran Zendesk connector and Fivetran Zendesk data model to produce analytics ready reports. You may find the analytics ready reports within the pages of this Streamlit app (these may be found on the left pane). These dashboards have been constructed using the[zendesk__ticket_metrics](https://fivetran.github.io/dbt_zendesk/#!/model/model.zendesk.zendesk__ticket_metrics) model from the Fivetran [Zendesk dbt package](https://github.com/fivetran/dbt_zendesk). These dashboards provide an example of how you may analyze your Zendesk data.
+The [Fivetran Zendesk Streamlit app](https://fivetran-zendesk.streamlit.app/) leverages data from the Fivetran Zendesk connector and Fivetran Zendesk data model to produce analytics ready reports. You may find the analytics ready reports within the pages of this Streamlit app (these may be found on the left pane). These dashboards have been constructed using the [zendesk__ticket_metrics](https://fivetran.github.io/dbt_zendesk/#!/model/model.zendesk.zendesk__ticket_metrics) model from the Fivetran [Zendesk dbt package](https://github.com/fivetran/dbt_zendesk). These dashboards provide an example of how you may analyze your Zendesk data.
 
 By default this Streamlit app uses sample Dunder Mifflin Zendesk tickets data to generate the dashboards. This sample data is a replica of the `zendesk__ticket_metrics` data model output. If you would like to leverage this app with your own data, you may follow the instructions within the below Installation and Deployment section.
 
-## Provided reports
+## 📈 Provided reports
 
 | **Page** | **Description** |
 |----------|-----------------|
