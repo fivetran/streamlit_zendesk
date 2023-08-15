@@ -6,19 +6,20 @@ destination = destination_selection()
 database, schema = database_schema_variables()
 '''
 # Fivetran Zendesk Streamlit App
+## Overview
 
-The [Fivetran Zendesk Streamlit app](https://fivetran-zendesk.streamlit.app/) is intended to leverage data from the Fivetran Zendesk connector and Fivetran Zendesk data model to produce analytics ready reports which may be effortlessly leveraged to understand your Zendesk ticket and assignee activity data. You may find the analytics ready reports within the pages of this Streamlit app (these may be found on the left pane). These dashboards have been constructed using the end models from the Fivetran [Zendesk dbt package](https://github.com/fivetran/dbt_zendesk). In particular, all tiles within the respective pages have been constructed from a simple `select * from zendesk__ticket_metrics` query. For an understanding of the ticket_metrics model, you may inspect the specifics within the hosted [dbt docs](https://fivetran.github.io/dbt_zendesk/#!/model/model.zendesk.zendesk__ticket_metrics).
+The [Fivetran Zendesk Streamlit app](https://fivetran-zendesk.streamlit.app/) leverages data from the Fivetran Zendesk connector and Fivetran Zendesk data model to produce analytics ready reports. You may find the analytics ready reports within the pages of this Streamlit app (these may be found on the left pane). These dashboards have been constructed using the[zendesk__ticket_metrics](https://fivetran.github.io/dbt_zendesk/#!/model/model.zendesk.zendesk__ticket_metrics) model from the Fivetran [Zendesk dbt package](https://github.com/fivetran/dbt_zendesk). These dashboards provide an example of how you may analyze your Zendesk data.
 
-By default this Streamlit app uses sample Dunder Mifflin Zendesk Tickets data when generating the dashboards. This sample data is used to highlight the Zendesk tickets analysis use case. If you would like to leverage this app with your own data, you may follow the instructions within the below Installation and Deployment section.
+By default this Streamlit app uses sample Dunder Mifflin Zendesk tickets data to generate the dashboards. This sample data is a replica of the `zendesk__ticket_metrics` data model output. If you would like to leverage this app with your own data, you may follow the instructions within the below Installation and Deployment section.
 
-## Report Breakdown
+## Provided reports
 
 | **Page** | **Description** |
 |----------|-----------------|
 | [ticket_metrics](https://fivetran-zendesk.streamlit.app/ticket_metrics) | This report is meant to provide a breakdown of all your Zendesk tickets created within a specified time frame. You can view high level metrics such as total created/solved/unsolved tickets while also being able to understand trends associated with your ticket volume broken down by attribute. |
 | [assignee_activity](https://fivetran-zendesk.streamlit.app/assignee_activity) | This report is mean to provide a breakdown of assignee activity within Zendesk and understand overall agent performance when working within tickets for the specified time frame. |
 
-# 🎯 How do I use the Streamlit App?
+# 🎯 How do I use this Streamlit app?
 As previously mentioned this Streamlit App is publicly deployed using sample Dunder Mifflin Zendesk ticket data. This is to show an example of the types of analysis that may be performed with modeled Zendesk data synced and transformed with Fivetran. However, this Streamlit App has been designed to be also be forked and customize to leverage other data sources. If you wish to leverage this Streamlit App with your own modeled Zendesk data, you may follow the below steps.
 
 ## Step 1: Prerequisites
@@ -27,7 +28,7 @@ To use this Streamlit app, you must have the following:
 - At least one Fivetran Zendesk connector syncing data into your destination.
 - A **BigQuery** or **Snowflake** destination.
 
-## Step 2: Data Models
+## Step 2: Data models
 You will need to have ran the [Fivetran dbt_zendesk data model](https://github.com/fivetran/dbt_zendesk) to transform your raw Zendesk data into analytics ready tables. Please refer to the data model documentation for instructions on how to run the data models. If you would like to have Fivetran run these data models for you, you may also leverage the [Fivetran Zendesk Quickstart Data Model](https://fivetran.com/docs/transformations/quickstart) for an easier experience.
 
 ## Step 3: Fork this repository
