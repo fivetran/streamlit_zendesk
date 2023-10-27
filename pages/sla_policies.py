@@ -35,7 +35,7 @@ else:
                 st.subheader('SLA achievement rate')
                 achieved_slas = data_date_filtered[data_date_filtered['is_sla_breach'] == 0]
                 achieved_sla_count = len(achieved_slas)
-                sla_achievement_rate = (data_date_filtered['achieved_sla_count'].sum() / len(data_date_filtered)) * 100
+                sla_achievement_rate = (data_date_filtered['achieved_sla_count'] / len(data_date_filtered)) * 100
                 st.metric("SLA achievement rate",  value=f'{sla_achievement_rate:.2f}%', delta=None, delta_color="normal", help=None, label_visibility="visible")
 
             with col2:
