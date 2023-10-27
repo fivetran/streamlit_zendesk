@@ -34,23 +34,38 @@ else:
             with col1:
                 st.subheader('SLA achievement rate')
                 sla_achieved_count = len(data_date_filtered.query("`is_sla_breach` == 0"))
-                total_ticket_count = data_date_filtered['sla_event_id'].nunique()  # Calculate the total number of distinct ticket IDs
-                sla_achievement_rate = (sla_achieved_count / total_ticket_count) * 100
+                total_sla_count = data_date_filtered['sla_event_id'].nunique()  # Calculate the total number of distinct sla IDs
+                sla_achievement_rate = (sla_achieved_count / total_sla_count) * 100
                 st.metric("SLA achievement rate",  value=f'{sla_achievement_rate:.2f}%', delta=None, delta_color="normal", help=None, label_visibility="visible")
 
             with col2:
                 st.subheader('SLA breached tickets')
+                # Filter data_date_filtered to select rows where 'is_sla_breach' is True (1).
                 breached_tickets = data_date_filtered[data_date_filtered['is_sla_breach'] == 1]
-                breached_ticket_ids = set(breached_tickets['ticket_id'].unique())
-                breached_ticket_count = len(breached_ticket_ids)
+                # Calculate the total count of unique ticket IDs for SLA breached tickets.
+                breached_ticket_count = len(breached_tickets['ticket_id'].nunique())
                 st.metric("SLA breached tickets", breached_ticket_count, delta=None, delta_color="normal", help=None, label_visibility="visible")
 
             with col3:
                 st.subheader('SLA achieved tickets')
                 achieved_tickets = data_date_filtered[data_date_filtered['is_sla_breach'] == 0]
-                achieved_ticket_ids = set(achieved_tickets['ticket_id'].unique())
-                achieved_ticket_count = len(achieved_ticket_ids)
+                achieved_ticket_count = len(achieved_tickets['ticket_id'].nunique())
                 st.metric("SLA achieved tickets", achieved_ticket_count, delta=None, delta_color="normal", help=None, label_visibility="visible")
+
+            col4, col5 = st.columns(2)
+            with col4:
+                st.subheader('SLA active tickets')
+                active_tickets = data_date_filtered[data_date_filtered['is_active_sla'] == 0]
+                active_ticket_count = len(active_tickets['ticket_id'].nunique()) 
+                st.metric("SLA active tickets", active_ticket_count, delta=None, delta_color="normal", help=None, label_visibility="visible")
+
+            with col5:
+                st.subheader('SLA active breached tickets')
+                active_breached_tickets = data_date_filtered[(data_date_filtered['is_sla_breach'] == 1) & (data_date_filtered['is_active_sla'] == 0)]
+                active_ticket_count = len(active_breached_tickets['ticket_id'].nunique()) 
+                st.metric("SLA active tickets", active_ticket_count, delta=None, delta_color="normal", help=None, label_visibility="visible")
+                st.metric(label="Median time from first assignment to full resolution", value=f'{median_time} minutes', delta=None)
+
 
             #####################################################################################################
 
