@@ -81,7 +81,9 @@ def query_results(destination, database, schema, model='ticket'):
                 "assignee_name "\
             "from " + database + "." + schema + ".zendesk__ticket_metrics"
         )
-
+        raw_results = query_job.result()
+        # Convert to list of dicts. Required for st.cache_data to hash the return value.
+        query = [dict(row) for row in raw_results]
 
     elif destination == "BigQuery" and model == "sla":
         query = run_query(
@@ -106,10 +108,6 @@ def query_results(destination, database, schema, model='ticket'):
         "left join " + database + "." + schema + ".zendesk__ticket_metrics as ticket "\
             "on sla.ticket_id = ticket.ticket_id "
         )
-        raw_results = query_job.result()
-        # Convert to list of dicts. Required for st.cache_data to hash the return value.
-        query = [dict(row) for row in raw_results]
-
     elif destination not in ("Snowflake", "BigQuery") and model == 'ticket':
         query = pd.read_csv('data/dunder_mifflin_tickets.csv')
 
