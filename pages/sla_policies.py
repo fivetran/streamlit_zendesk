@@ -34,7 +34,7 @@ else:
             with col1:
                 st.subheader('SLA achievement rate')
                 sla_achieved_count = len(data_date_filtered.query("`is_sla_breach` == 0"))
-                total_ticket_count = data_date_filtered['ticket_id'].nunique()  # Calculate the total number of distinct ticket IDs
+                total_ticket_count = data_date_filtered['sla_event_id'].nunique()  # Calculate the total number of distinct ticket IDs
                 sla_achievement_rate = (sla_achieved_count / total_ticket_count) * 100
                 st.metric("SLA achievement rate",  value=f'{sla_achievement_rate:.2f}%', delta=None, delta_color="normal", help=None, label_visibility="visible")
 
