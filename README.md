@@ -25,10 +25,10 @@ To use this Streamlit app, you must have the following:
 You will need to have ran the [Fivetran dbt_zendesk data model](https://github.com/fivetran/dbt_zendesk) to transform your raw Zendesk data into analytics ready tables. Please refer to the data model documentation for instructions on how to run the data models. If you would like to have Fivetran run these data models for you, you may also leverage the [Fivetran Zendesk Quickstart Data Model](https://fivetran.com/docs/transformations/quickstart) for an easier experience.
 
 ## Step 3: Fork this repository
-To leverage this Streamlit App with your own data, you will want to fork this repo. To learn more about forking repos you may refer to the [GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+To leverage this Streamlit App with your own data, you will need to fork this repo. To learn more about forking repos you may refer to the [GitHub docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
 ## Step 4: Run your forked Streamlit app
-Once you have forked the repo, you will want to clone the repo locally to run it and make any minor adjustments. To do this you will perform the following:
+Once you have forked the repo, you will need to clone the repo locally to run it and make any minor adjustments. To do this you will perform the following:
 - Start a virtual environment and install the requirements. You can use the following commands to create a venv and setup the environment with the appropriate dependencies:
 ```zsh
 python3 -m pip install --user virtualenv && 
