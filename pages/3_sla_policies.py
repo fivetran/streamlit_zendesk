@@ -72,32 +72,13 @@ else:
 
             st.markdown('---')
 
-            #####################################################################################################
-            ## Area chart: Achieved vs. breached completed SLA policies by date
-            # st.subheader('Achieved vs. breached completed SLA policies')
-            # sla_policies_data = data_date_filtered.copy()
- 
-            # # Convert 'sla_applied_at' to datetime, make them timezone naive, and extract date
-            # sla_policies_data['sla_applied_at'] = pd.to_datetime(sla_policies_data['sla_applied_at']).dt.tz_localize(None).dt.date
-            # sla_completed_count = len(data_date_filtered.query("`is_sla_breach` == 0"))
-            # sla_breached_count = len(data_date_filtered.query("`is_sla_breach` == 1"))
-            # breached_sla_policies['day'] = sla_policies_data[sla_policies_data['is_sla_breach'] == 1]
-            # achieved_sla_policies['day'] = sla_policies_data[sla_policies_data['is_sla_breach'] == 0]
-
-            # # Group by date and count the number of SLAs applied each day 
-            # breached_slas = breached_sla_policies.groupby('day')['ticket_id'].nunique()
-            # achieved_slas = achieved_sla_policies.groupby('day')['ticket_id'].nunique()
-            # st.area_chart(data=["breached_slas", "achieved_slas"])
-            # st.subheader('Tickets created by hour')
-            # ticket_by_hour_data = data_date_filtered.copy()
-            # tickets_solve_date['first_solved_at'] = pd.to_datetime(tickets_solve_date['first_solved_at']).dt.tz_localize(None).dt.date
- 
+            #################################################################################################### 
             # Create an area chart using st.area_chart.
             st.subheader('Achieved vs. breached completed SLA policies')
             sla_policies_date = data_date_filtered.copy()
 
             # Convert 'sla_applied_at' to datetime, make them timezone naive, and extract date
-            sla_policies_date['sla_applied_at'] = pd.to_datetime(sla_policies_date['sla_applied_at']) 
+            sla_policies_date['sla_applied_at'] = sla_policies_date['sla_applied_at'].dt.date
             
             # Filter and count achieved and breached SLAs
             completed_slas = sla_policies_date[sla_policies_date['is_active_sla'] == 0]
@@ -242,11 +223,17 @@ else:
             days = {0:'Mon', 1:'Tue', 2:'Wed', 3:'Thu', 4:'Fri', 5:'Sat', 6:'Sun'}
             average_daily_breaches.index = average_daily_breaches.index.map(days)
 
+            # Convert to DataFrame for easier sorting
+            df_breaches = average_daily_breaches.reset_index()
+            df_breaches.columns = ['Day', 'Average Breaches']
+
+            # Custom sort order
+            ordered_days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            df_breaches['Day'] = pd.Categorical(df_breaches['Day'], categories=ordered_days, ordered=True)
+            df_breaches = df_breaches.sort_values('Day')
+
             # Plot the time series using Streamlit
-            st.bar_chart(average_daily_breaches)
+            st.bar_chart(df_breaches.set_index('Day'))
 
-            # Table data
-
-            st.table(data_date_filtered.copy().head(10))
     else:
         st.warning('Please ensure both start date and end date are selected.')

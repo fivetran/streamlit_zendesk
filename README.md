@@ -9,8 +9,9 @@ By default this Streamlit app uses sample Dunder Mifflin Zendesk tickets data to
 
 | **Page** | **Description** |
 |----------|-----------------|
-| [ticket_metrics](https://fivetran-zendesk.streamlit.app/ticket_metrics) | This report is meant to provide a breakdown of all your Zendesk tickets created within a specified time frame. You can view high level metrics such as total created/solved/unsolved tickets while also being able to understand trends associated with your ticket volume broken down by attribute. |
-| [assignee_activity](https://fivetran-zendesk.streamlit.app/assignee_activity) | This report is mean to provide a breakdown of assignee activity within Zendesk and understand overall agent performance when working within tickets for the specified time frame. |
+| [Ticket Metrics](https://fivetran-zendesk.streamlit.app/1_ticket_metrics) | This report is meant to provide a breakdown of all your Zendesk tickets created within a specified time frame. You can view high level metrics such as total created/solved/unsolved tickets while also being able to understand trends associated with your ticket volume broken down by attribute. |
+| [Assignee Activity](https://fivetran-zendesk.streamlit.app/2_assignee_activity) | This report includes a breakdown of assignee activity within Zendesk and understand overall agent performance when working within tickets for the specified time frame. |
+| [SLA Policies](https://fivetran-zendesk.streamlit.app/3_sla_policies) | This report provides an overview of all your achieved and breached ticket SLA Policies across tickets within a specified date range. Use this report to gain insights into how you are performing against your SLA targets. |
 
 # 🎯 How do I use this Streamlit app?
 As previously mentioned this Streamlit App is publicly deployed using sample Dunder Mifflin Zendesk ticket data. This is to show an example of the types of analysis that may be performed with modeled Zendesk data synced and transformed with Fivetran. However, this Streamlit App has been designed to be also be forked and customize to leverage other data sources. If you wish to leverage this Streamlit App with your own modeled Zendesk data, you may follow the below steps.
