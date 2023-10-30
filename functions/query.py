@@ -139,8 +139,12 @@ def query_results(destination, database, schema, model='ticket'):
 
     elif destination == "Dunder Mifflin Sample Data" and model == "ticket":
         query = pd.read_csv('data/dunder_mifflin_tickets.csv')
-        data = pd.DataFrame(query, columns=['ticket_id','created_at','created_timestamp','status','first_solved_at','ticket_brand','ticket_channel','ticket_form','ticket_group','ticket_priority','ticket_type','submitter_role','requester_organization','is_one_touch_resolution','is_two_touch_resolution','is_multi_touch_resolution','first_assignment_to_resolution_calendar_minutes','requester_wait_time_in_calendar_minutes','ticket_satisfaction_score','first_reply_time_calendar_minutes','last_assignment_to_resolution_calendar_minutes','final_resolution_calendar_minutes','assignee_name'])
 
+    elif destination == "Dunder Mifflin Sample Data" and model == "sla":
+        query = pd.read_csv('data/dunder_mifflin_slas.csv')
+
+    if model == 'ticket':
+        data = pd.DataFrame(query, columns=['ticket_id','created_at','created_timestamp','status','first_solved_at','ticket_brand','ticket_channel','ticket_form','ticket_group','ticket_priority','ticket_type','submitter_role','requester_organization','is_one_touch_resolution','is_two_touch_resolution','is_multi_touch_resolution','first_assignment_to_resolution_calendar_minutes','requester_wait_time_in_calendar_minutes','ticket_satisfaction_score','first_reply_time_calendar_minutes','last_assignment_to_resolution_calendar_minutes','final_resolution_calendar_minutes','assignee_name'])
         # Get the data into the app and specify any datatypes if needed.
         data_load_state = st.text('Loading data...')
         data['created_at'] = pd.to_datetime(data['created_at'])
@@ -149,14 +153,15 @@ def query_results(destination, database, schema, model='ticket'):
         data['first_solved_at'] = data['first_solved_at'].dt.date
         data_load_state.text("Done! (using st.cache_data)")
 
-    elif destination == "Dunder Mifflin Sample Data" and model == "sla":
-        query = pd.read_csv('data/dunder_mifflin_slas.csv')
+    elif model == 'sla':
         data = pd.DataFrame(query, columns=['sla_event_id','ticket_id','sla_policy_name','metric','sla_applied_at','target','in_business_hours','sla_breach_at','sla_elapsed_time','is_active_sla','is_sla_breach','ticket_group','ticket_brand','ticket_form','requester_organization','ticket_channel'])
 
         # Get the data into the app and specify any datatypes if needed.
         data_load_state = st.text('Loading data...')
         data['sla_applied_at'] = pd.to_datetime(data['sla_applied_at'])
         data['sla_breach_at'] = pd.to_datetime(data['sla_breach_at'])
+        data['sla_breach_at'] = data['sla_breach_at'].dt.tz_localize(None)
+        data['sla_applied_at'] = data['sla_applied_at'].dt.tz_localize(None)
         data['created_at'] = data['sla_applied_at'].dt.date
         data_load_state.text("Done! (using st.cache_data)")
 
