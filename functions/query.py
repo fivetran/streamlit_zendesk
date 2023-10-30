@@ -143,6 +143,8 @@ def query_results(destination, database, schema, model='ticket'):
 
         # Get the data into the app and specify any datatypes if needed.
         data_load_state = st.text('Loading data...')
+        data['created_at'] = pd.to_datetime(data['created_at'])
+        data['first_solved_at'] = pd.to_datetime(data['first_solved_at'])
         data['created_at'] = data['created_at'].dt.date
         data['first_solved_at'] = data['first_solved_at'].dt.date
         data_load_state.text("Done! (using st.cache_data)")
