@@ -3,20 +3,33 @@ from datetime import datetime, timedelta
 from functions.query import query_results
 
 def date_filter(dest, db, sc):
-    current_date = datetime.today().date()
-    start_of_week = current_date - timedelta(days=(current_date.weekday() + 1) % 7)
-    end_of_week = start_of_week + timedelta(days=6)
-
     data = query_results(destination=dest, database=db, schema=sc)
 
-    # Define top level filters
-    ## Time frame for all chats on the page
-    d = st.date_input(
+    # Extract the maximum date from your data
+    latest_date_in_data = max(data['created_at'])
+
+    # Compute the end of the week for the latest date
+    end_of_week = latest_date_in_data - timedelta(days=(latest_date_in_data.weekday() - 6))
+
+    # Compute the start of the two-week period
+    start_of_two_weeks = end_of_week - timedelta(days=13)
+
+    # Check if the dates are already in session state, otherwise set them
+    if 'start_date' not in st.session_state:
+        st.session_state.start_date = start_of_two_weeks
+    if 'end_date' not in st.session_state:
+        st.session_state.end_date = end_of_week
+
+    # Use the session state dates for the date_input
+    date_range = st.date_input(
         "(Required) Select your date range",
-        (start_of_week, end_of_week)
+        (st.session_state.start_date, st.session_state.end_date)
     )
 
-    return data, d
+    # Update the session state with the selected dates
+    st.session_state.start_date, st.session_state.end_date = date_range
+
+    return data, date_range
 
 def optional_filters(data_ref, include_assignee):
     opt1, opt2, opt3 = st.columns(3)

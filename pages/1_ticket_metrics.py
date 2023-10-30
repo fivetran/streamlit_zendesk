@@ -74,18 +74,18 @@ else:
 
             # Convert 'created_at' to datetime and extract day of week if it's not already in that format
             avg_ticket_by_day_week['created_at'] = pd.to_datetime(avg_ticket_by_day_week['created_at'])
-            avg_ticket_by_day_week['day_of_week'] = avg_ticket_by_day_week['created_at'].dt.dayofweek
+            avg_ticket_by_day_week['day_of_week'] = avg_ticket_by_day_week['created_at'].dt.day_name()
 
-            # Count the number of tickets created each day of the week
+            # Define the correct order for days of the week
+            correct_order = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+            avg_ticket_by_day_week['day_of_week'] = pd.Categorical(avg_ticket_by_day_week['day_of_week'], categories=correct_order, ordered=True)
+
+            # Group by day of week and count tickets
             daily_tickets = avg_ticket_by_day_week.groupby('day_of_week')['ticket_id'].count()
 
             # Calculate the average
             total_days = len(avg_ticket_by_day_week['created_at'].dt.normalize().unique())
             average_daily_tickets = (daily_tickets / total_days).round(2)
-
-            # Create a dictionary to map day of week numbers to names
-            days = {0:'Mon', 1:'Tue', 2:'Wed', 3:'Thu', 4:'Fri', 5:'Sat', 6:'Sun'}
-            average_daily_tickets.index = average_daily_tickets.index.map(days)
 
             # Plot the time series using Streamlit
             st.bar_chart(average_daily_tickets)
